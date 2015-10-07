@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MultiCameraServer</string>
+    <string name="connectbtn">Connect</string>
+    <string name="snapbtn">Snap!</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="expbtn">Start Experiment</string>
+    <string name="stopexpbtn">Stop Experiment</string>
+</resources>

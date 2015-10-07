@@ -1,0 +1,69 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/black"
+                tools:context="org.hyrax.multicamera.server.app.activity.MainActivity">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_alignParentTop="true"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@+id/connect_btn">
+
+        <ListView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:id="@+id/client_list"
+                android:divider="@android:color/transparent"/>
+
+        <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/result_list"/>
+    </LinearLayout>
+
+
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/connectbtn"
+            android:id="@+id/connect_btn"
+            android:layout_above="@+id/snap_btn"
+            android:onClick="onConnect"/>
+
+    <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/snapbtn"
+            android:id="@+id/snap_btn"
+            android:layout_above="@+id/explayout"
+            android:onClick="doSnap"/>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/explayout"
+            android:weightSum="1">
+
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/expbtn"
+                android:id="@+id/exp_btn"
+                android:onClick="doExperiment"
+                android:layout_weight="0.5"/>
+
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/stopexpbtn"
+                android:id="@+id/stopexp_btn"
+                android:onClick="stopExperiment"
+                android:layout_weight="0.5"/>
+    </LinearLayout>
+
+</RelativeLayout>
