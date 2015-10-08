@@ -78,7 +78,7 @@ public class MainActivity extends BluetoothActivity implements SurfaceHolder.Cal
         mListLog = new ArrayList<>();
         mLogAdapter = new ArrayAdapter<>(this, R.layout.item_console, mListLog);
         mListView.setAdapter(mLogAdapter);
-
+        selectClientMode();
     }
 
     public void setCameraDisplayOrientation()

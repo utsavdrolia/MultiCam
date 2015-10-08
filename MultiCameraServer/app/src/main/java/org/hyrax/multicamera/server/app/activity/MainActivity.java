@@ -3,6 +3,10 @@ package org.hyrax.multicamera.server.app.activity;
 import android.bluetooth.BluetoothDevice;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
+import android.nfc.NfcAdapter;
+import android.nfc.NfcEvent;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
@@ -14,12 +18,17 @@ import org.hyrax.multicamera.server.app.ui.ResultItem;
 import org.hyrax.multicamera.server.app.ui.ResultListAdapter;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.msgpack.core.MessagePack;
+import org.msgpack.core.MessagePacker;
+import org.msgpack.core.MessageUnpacker;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends BluetoothActivity
+public class MainActivity extends BluetoothActivity implements NfcAdapter.CreateNdefMessageCallback
 {
 
     private ResultListAdapter mResultAdapter;
@@ -32,6 +41,7 @@ public class MainActivity extends BluetoothActivity
     private long expCounter = 0;
     private long repliesCounter;
     private int devicesConnected = 0;
+    NfcAdapter mNfcAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -47,14 +57,36 @@ public class MainActivity extends BluetoothActivity
         ListView mResultView = (ListView) findViewById(R.id.result_list);
         mResultAdapter = new ResultListAdapter(this, new ArrayList<ResultItem>());
         mResultView.setAdapter(mResultAdapter);
+        mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        mNfcAdapter.setNdefPushMessageCallback(this, this);
 
     }
+
+    @Override
+    public NdefMessage createNdefMessage(NfcEvent event) {
+        return new NdefMessage(
+                new NdefRecord[] {NdefRecord.createApplicationRecord("org.hyrax.multicamera")});
+    }
+
 
 
     @Override
     public void onBluetoothCommunicator(String messageReceive, String dev)
     {
         setLogText("===> receive msg from: " + dev);
+//        try
+//        {
+//            MessageUnpacker unpacker = MessagePack.newDefaultUnpacker(messageReceive);
+//            int id = unpacker.unpackInt();
+//            int len = unpacker.unpackBinaryHeader();
+//            byte[] bytes = unpacker.readPayload(len);
+//            mResultAdapter.add(dev, BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+//            setLogText("===> Images clicked: " + ++repliesCounter);
+//        }
+//        catch (IOException e)
+//        {
+//            e.printStackTrace();
+//        }
         try
         {
             JSONObject json = new JSONObject(messageReceive);
@@ -119,6 +151,20 @@ public class MainActivity extends BluetoothActivity
 
     private void click()
     {
+//        try
+//        {
+//            ByteArrayOutputStream out = new ByteArrayOutputStream();
+//            MessagePacker packer = MessagePack.newDefaultPacker(out);
+//            packer.packShort(ID_KEY);
+//            packer.packLong(System.currentTimeMillis());
+//            packer.close();
+//            mBluetoothManager.sendMessage(out.toByteArray());
+//            setLogText("===> Snap!");
+//        }
+//        catch (IOException e)
+//        {
+//            e.printStackTrace();
+//        }
         JSONObject json = new JSONObject();
         try
         {
